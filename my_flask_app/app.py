@@ -1,7 +1,8 @@
 # app.py
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 
 app = Flask(__name__)       # Create a flask app instance
+app.secret_key = 'my-secret-key-1234'
 
 @app.route('/')             # Route for home page
 def home():
@@ -34,16 +35,15 @@ def contact():
     message = request.form['message']
     
     if not name or not message or not email or '@' not in email:
-      return render_template('contact.html', error='Please fill out all fields.')
-    return redirect(url_for('contact_success', name=name, email=email, message=message))
+      flash('Please fill out all fields.', 'error')
+      return render_template('contact.html')
+    flash(f'Thanks for contacting us, {name}! Your message: {message}', 'success')
+    return redirect(url_for('contact_success'))
   return render_template('contact.html', error=None)
 
 @app.route('/contact/success')
 def contact_success():
-  name = request.args.get('name')
-  email = request.args.get('email')
-  message = request.args.get('message')
-  return render_template('contact_success.html', name=name, email=email, message=message)
+  return render_template('contact_success.html')
 
 @app.route('/echo', methods=['GET', 'POST'])
 def echo():
@@ -60,7 +60,16 @@ def echo():
 def echo_success():
   my_input = request.args.get('my_input')
   return render_template('echo_success.html', my_input=my_input)
-  
+
+@app.errorhandler(404)  
+def page_not_found(error):
+  flash('Oops! That page doesn’t exist.', 'error')
+  return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def server_error(error):
+  flash('Internal Server Error.', 'error')
+  return render_template('500.html'), 500
 
 if __name__ ==  '__main__':
   app.run(debug=True)       # Run app in debug mode

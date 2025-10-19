@@ -1,12 +1,12 @@
-{% extends 'base.html' %} {% block title %}Message Sent{% endblock %} {% block
-content %}
-<h2>Message Sent</h2>
+{% extends 'base.html' %} {% block title %} Page Not Found{% endblock %} {%
+block content %}
+<h2>404 - Page Not Found</h2>
 {% with messages = get_flashed_messages(with_categories=true) %} {% if messages
 %} {% for category, message in messages %}
 <p style="color: {{ 'red' if category == 'error' else 'green' }}">
   {{ message }}
 </p>
 {% endfor %} {% endif %} {% endwith %}
-
-<a href="{{ url_for('contact') }}">Send another message</a>
+<p>Sorrry, the page you're looking for does not exist.</p>
+<a href="{{ url_for('home') }}">Back to Home</a>
 {% endblock %}
