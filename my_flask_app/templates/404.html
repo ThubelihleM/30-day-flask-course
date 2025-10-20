@@ -3,7 +3,7 @@ block content %}
 <h2>404 - Page Not Found</h2>
 {% with messages = get_flashed_messages(with_categories=true) %} {% if messages
 %} {% for category, message in messages %}
-<p style="color: {{ 'red' if category == 'error' else 'green' }}">
+<p style="color: {{ 'red' if category == 'error' else 'green' }};">
   {{ message }}
 </p>
 {% endfor %} {% endif %} {% endwith %}
