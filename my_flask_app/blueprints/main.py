@@ -19,3 +19,6 @@ def fruits():
 def user(name):
   return render_template('main/user.html', username=name)
 
+@main.route('/api-docs')
+def api_docs():
+  return render_template('main/api_docs.html')

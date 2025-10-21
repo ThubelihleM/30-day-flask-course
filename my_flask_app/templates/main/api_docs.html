@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% block title %}API Docs{% endblock %} {% block
+content %}
+<h2>API Documentation</h2>
+<p>Get /api/todos - Fetch all todos</p>
+<p>POST /api/todos - Add a todo (JSON: {"task": "Your task"})</p>
+<a href="{{ url_for('api.get_todos') }}">Test GET Todos (JSON)</a>
+{% endblock %}
