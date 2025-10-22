@@ -1,19 +1,38 @@
 {% extends 'base.html' %} {% block title %}New Post{% endblock %} {% block
 content %}
-<h2>Create a New Post</h2>
+<h1 class="mb-4">Create a New Post</h1>
 {% with messages = get_flashed_messages(with_categories=true) %} {% if messages
 %} {% for category, message in messages %}
-<p style="color: {{ 'red' if category == 'error' else 'green'}};">
+<div
+  class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show"
+  role="alert"
+>
   {{ message }}
-</p>
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
 {% endfor %} {% endif %} {% endwith %}
-<form method="post">
-  <label for="title">Title:</label><br />
-  <input type="text" id="title" name="title" required /><br />
-  <label for="content">Content:</label><br />
-  <textarea name="content" id="content" required></textarea><br />
-  <button type="submit">Create Post</button>
+<form method="post" class="row g-3">
+  <div class="col-12">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" class="form-control" id="title" name="title" required />
+  </div>
+  <div class="col-12">
+    <label for="content" class="form-label">Content</label>
+    <textarea
+      class="form-control"
+      id="content"
+      name="content"
+      rows="5"
+      required
+    ></textarea>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Create Post</button>
+  </div>
 </form>
-<a href="{{ url_for('blog.blog_index') }}">Back to blog</a>
-
 {% endblock %}

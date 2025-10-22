@@ -1,15 +1,33 @@
 {% extends 'base.html' %}{% block title %}Blog{% endblock %} {% block content %}
-<h2>Blog Posts</h2>
+<h2 class="mb-4">Blog Posts</h2>
 {% with messages = get_flashed_messages(with_categories=true) %} {% if messages
 %} {% for category, message in messages %}
-<p style="color: {{ 'red' if category == 'error' else 'green' }}">
+<div
+  class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show"
+  role="alert"
+>
   {{ message }}
-</p>
-{% endfor %} {% endif %} {% endwith %} {% for post in posts %}
-<div>
-  <h3>{{ post.title }}</h3>
-  <p>{{ post.content }}</p>
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
 </div>
-{% endfor %}
-<a href="{{ url_for('blog.new_post') }}">Create New Post</a>
+{% endfor %} {% endif %} {% endwith %}
+<div class="row">
+  {% for post in posts %}
+  <div class="col-md-4 mb-3">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <p class="card-text">{{ post.content }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<a href="{{ url_for('blog.new_post') }}" class="btn btn-primary mt-3"
+  >Create New Post</a
+>
 {% endblock %}
