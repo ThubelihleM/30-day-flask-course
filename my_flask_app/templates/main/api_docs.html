@@ -3,5 +3,7 @@ content %}
 <h2>API Documentation</h2>
 <p>Get /api/todos - Fetch all todos</p>
 <p>POST /api/todos - Add a todo (JSON: {"task": "Your task"})</p>
-<a href="{{ url_for('api.get_todos') }}">Test GET Todos (JSON)</a>
+<p>GET /api/posts - Fetch all blog posts</p>
+<a href="{{ url_for('api.get_todos') }}">Test GET Todos (JSON)</a><br />
+<a href="{{ url_for('api.get_posts') }}">Test GET Posts (JSON)</a>
 {% endblock %}

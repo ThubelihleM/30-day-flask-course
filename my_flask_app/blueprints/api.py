@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from blueprints.blog import posts
 
 api = Blueprint('api', __name__)
 
@@ -46,6 +47,18 @@ def update_todo(id):
   todo['done'] = request.json['done']
   return jsonify(todo)
 
-@api.route('/api/fruits')
-def get_fruits():
-  return jsonify({'fruits': ['Apple', 'Banana', 'Orange', 'Mango']})
+@api.route('/api/posts', methods=['GET'])
+def get_posts():
+  return jsonify(posts)
+
+@api.route('/api/posts', methods=['POST'])
+def add_post():
+  if not request.json or 'title' not in request.json or 'content' not in request.json:
+    return jsonify({'error': 'Title and content required'}), 400
+  new_post = {
+    'id': len(posts) + 1,
+    'title': request.json['title'],
+    'content': request.json['content']
+  }
+  posts.append(new_post)
+  return jsonify(new_post)
